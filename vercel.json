@@ -1,8 +1,8 @@
 {
   "buildCommand": "npm run build",
-  "outputDirectory": "dist",  // <--- CHANGE THIS from "build" to "dist"
+  "outputDirectory": "dist",  
   "installCommand": "npm install",
-  "framework": "vite",        // <--- CHANGE THIS from "create-react-app" to "vite"
+  "framework": "vite",        
   "rewrites": [
     { "source": "/api/(.*)", "destination": "https://mentora1.onrender.com/api/$1" }
   ],
