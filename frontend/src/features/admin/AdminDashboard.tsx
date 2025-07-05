@@ -1,17 +1,17 @@
 // src/features/admin/AdminDashboard.tsx
-
+import React from "react"; // Removed useEffect from import
 // Removed: import AOS from "aos";
 // Removed: import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import "../../styles/styles.css";
+import Navbar from "../../components/Navbar"; // Verify path
+import Footer from "../../components/Footer"; // Verify path
+import "../../styles/styles.css"; // Verify path
 
 const AdminDashboard: React.FC = () => {
-  // Removed AOS initialization useEffect
+  // Removed useEffect hook as it's no longer needed after removing AOS
   // useEffect(() => {
   //   AOS.init({
-  //     once: true,
+  //     once: true, // Only animate once
   //   });
   // }, []);
 
@@ -20,25 +20,25 @@ const AdminDashboard: React.FC = () => {
       <Navbar />
       <main className="admin-dashboard-page">
         <section className="hero-section admin-hero">
-          <div className="hero-content"> {/* Removed data-aos attributes */}
-            <h1>Welcome, Admin</h1>
-            <p>Manage users, matches, and sessions from your control panel.</p>
+          <div className="hero-content"> {/* Removed data-aos attribute */}
+            <h1>Admin Dashboard</h1>
+            <p>Manage users, content, and system settings.</p>
           </div>
         </section>
 
         <section className="section-padding">
           <div className="container admin-grid">
-            <Link to="/admin/AllUsers" className="admin-card"> {/* Removed data-aos attributes */}
-              <h3>👥 All Users</h3>
-              <p>View and manage registered mentors and mentees.</p>
+            <Link to="/admin/users" className="admin-card"> {/* Removed data-aos attribute */}
+              <h3>👥 Manage Users</h3>
+              <p>View, create, update, and delete user accounts.</p>
             </Link>
-            <Link to="/admin/AllMatches" className="admin-card"> {/* Removed data-aos attributes */}
-              <h3>🤝 Mentorship Matches</h3>
-              <p>Review and assign mentorship connections.</p>
+            <Link to="/admin/content" className="admin-card"> {/* Removed data-aos attribute */}
+              <h3>📝 Manage Content</h3>
+              <p>Oversee articles, resources, and site content.</p>
             </Link>
-            <Link to="/admin/AllSessions" className="admin-card"> {/* Removed data-aos attributes */}
-              <h3>📅 Sessions</h3>
-              <p>View all scheduled and completed mentorship sessions.</p>
+            <Link to="/admin/settings" className="admin-card"> {/* Removed data-aos attribute */}
+              <h3>⚙️ System Settings</h3>
+              <p>Configure platform-wide settings and integrations.</p>
             </Link>
           </div>
         </section>
