@@ -1,4 +1,4 @@
-import React, { useEffect, useState } => "react";
+import React, { useEffect, useState } from "react"; // Corrected: 'from' expected, not '=>'
 import AOS from "aos"; // Ensure AOS is installed (npm install aos or yarn add aos)
 import "aos/dist/aos.css"; // Ensure AOS styles are available
 import { useNavigate } from "react-router-dom";
