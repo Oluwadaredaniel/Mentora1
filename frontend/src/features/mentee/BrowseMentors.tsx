@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react"; // Corrected: 'from' expected, not '=>'
-import AOS from "aos"; // Ensure AOS is installed (npm install aos or yarn add aos)
-import "aos/dist/aos.css"; // Ensure AOS styles are available
+// src/features/mentee/BrowseMentors.tsx
+import React, { useEffect, useState } from "react";
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar"; // Retaining original path. Please verify this path matches your project structure.
 import Footer from "../../components/Footer"; // Retaining original path. Please verify this path matches your project structure.
@@ -46,7 +47,8 @@ const BrowseMentors: React.FC = () => {
   ];
 
   useEffect(() => {
-    AOS.init({ duration: 800, once: true }); // Initialize AOS with 'once: true'
+    // Removed AOS initialization
+    // AOS.init({ duration: 800, once: true });
     fetchMentors();
   }, []);
 
@@ -89,9 +91,9 @@ const BrowseMentors: React.FC = () => {
 
       const data: Mentor[] = await response.json(); // Expect an array of Mentor objects
       setMentors(data);
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Fetch mentors error:", err);
-      setError(err.message || "An unexpected error occurred while fetching mentors.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while fetching mentors.");
     } finally {
       setLoading(false);
     }
@@ -109,7 +111,7 @@ const BrowseMentors: React.FC = () => {
     if (filtered.length === 0) return null;
 
     return (
-      <div className="mentor-category" key={category} data-aos="fade-up">
+      <div className="mentor-category" key={category}> {/* Removed data-aos attribute */}
         <h3>{category} Mentors</h3> {/* Added 'Mentors' for clarity */}
         <div className="mentor-scroll">
           {filtered.map((mentor) => (
@@ -143,7 +145,7 @@ const BrowseMentors: React.FC = () => {
       <Navbar /> {/* Navbar component included */}
       <main className="browse-mentors-page">
         <section className="hero-section"> {/* Optional hero section for design */}
-          <div className="hero-content" data-aos="fade-down">
+          <div className="hero-content"> {/* Removed data-aos attribute */}
             <h2 className="section-title">Browse Mentors</h2>
             <p>Choose a mentor based on your interest area and skills.</p>
           </div>
@@ -163,7 +165,7 @@ const BrowseMentors: React.FC = () => {
               {/* Optional: Render any mentors that don't fit into the above categories, or a general "All Mentors" list */}
               {/* This block can be uncommented if you want to display all mentors regardless of their primary categories/skills */}
               {/*
-              <div className="mentor-category" data-aos="fade-up" style={{ marginTop: '3rem' }}>
+              <div className="mentor-category" style={{ marginTop: '3rem' }}>
                 <h3>All Available Mentors</h3>
                 <div className="mentor-scroll">
                   {mentors.map((mentor) => (

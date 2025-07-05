@@ -1,7 +1,7 @@
 // src/features/mentee/RequestSession.tsx
 import React, { useEffect, useState } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar"; // Retaining original path. Please verify this path matches your project structure.
 import Footer from "../../components/Footer"; // Retaining original path. Please verify this path matches your project structure.
@@ -34,7 +34,8 @@ const RequestSession: React.FC = () => {
 
   // Effect to handle redirection if no mentor data is available
   useEffect(() => {
-    AOS.init({ duration: 800, once: true });
+    // Removed AOS initialization
+    // AOS.init({ duration: 800, once: true });
     // Only redirect if no mentor data AND no success message is currently displayed
     // This prevents immediate redirect after successful submission before message can be seen
     if ((!selectedMentor || !selectedMentor._id) && !successMessage) {
@@ -133,9 +134,9 @@ const RequestSession: React.FC = () => {
       setTimeout(() => {
         navigate("/mentee/requests");
       }, 2000); // Navigate after 2 seconds
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("DEBUG: Send request caught error:", err);
-      setError(err.message || "An unexpected error occurred while sending your request.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while sending your request.");
     } finally {
       setLoading(false); // End loading state
       console.log("DEBUG: Request submission process finished.");
@@ -161,7 +162,7 @@ const RequestSession: React.FC = () => {
       <Navbar />
       <main className="request-session-page">
         <section className="hero-section">
-          <div className="hero-content" data-aos="fade-down">
+          <div className="hero-content"> {/* Removed data-aos attribute */}
             <h2 className="section-title">Request Session with {selectedMentor.fullName}</h2>
             <p>Fill out the form below to send a mentorship request to {selectedMentor.fullName}.</p>
           </div>
@@ -171,7 +172,7 @@ const RequestSession: React.FC = () => {
           {error && <p className="error-text" style={{ textAlign: 'center' }}>{error}</p>}
           {successMessage && <p className="success-text" style={{ textAlign: 'center' }}>{successMessage}</p>}
 
-          <div className="mentor-details-card" data-aos="fade-right">
+          <div className="mentor-details-card"> {/* Removed data-aos attribute */}
             <h3>Mentor Details:</h3>
             <p><strong>Name:</strong> {selectedMentor.fullName}</p>
             <p><strong>Email:</strong> {selectedMentor.email}</p>
@@ -184,7 +185,7 @@ const RequestSession: React.FC = () => {
             )}
           </div>
 
-          <form onSubmit={handleSubmit} className="request-form" data-aos="fade-up" data-aos-delay="200">
+          <form onSubmit={handleSubmit} className="request-form"> {/* Removed data-aos attribute */}
             <div className="form-group">
               <label htmlFor="message">Your Message to {selectedMentor.fullName}:</label>
               <textarea

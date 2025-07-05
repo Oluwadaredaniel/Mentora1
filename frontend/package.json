@@ -12,7 +12,6 @@
   "dependencies": {
     "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
-    "aos": "^2.3.4",
     "axios": "^1.10.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.18.1",
@@ -26,7 +25,6 @@
   "devDependencies": {
     "@eslint/js": "^9.25.0",
     "@tailwindcss/postcss": "^4.1.10",
-    "@types/aos": "^3.0.7",
     "@types/node": "^24.0.10",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",

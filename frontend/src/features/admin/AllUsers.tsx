@@ -1,7 +1,7 @@
 // src/features/admin/AllUsers.tsx
 import React, { useEffect, useState } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import Navbar from "../../components/Navbar"; // Verify path
 import Footer from "../../components/Footer"; // Verify path
 import "../../styles/styles.css"; // Verify path
@@ -51,7 +51,8 @@ const AllUsers: React.FC = () => {
 
 
   useEffect(() => {
-    AOS.init({ once: true });
+    // Removed AOS initialization
+    // AOS.init({ once: true });
     fetchAllUsers();
   }, []);
 
@@ -83,9 +84,10 @@ const AllUsers: React.FC = () => {
 
       const data: User[] = await response.json();
       setUsers(data);
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Fetch users error:", err);
-      setError(err.message || "An unexpected error occurred while fetching users.");
+      // Type guard for error message
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while fetching users.");
     } finally {
       setLoading(false);
     }
@@ -130,9 +132,10 @@ const AllUsers: React.FC = () => {
       setShowCreateUserModal(false);
       setNewUserData({ fullName: "", email: "", password: "", role: "mentee" }); // Reset form
       fetchAllUsers(); // Refresh the user list
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Create user error:", err);
-      setCreateError(err.message || "An unexpected error occurred during user creation.");
+      // Type guard for error message
+      setCreateError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred during user creation.");
     } finally {
       setCreateLoading(false);
     }
@@ -190,9 +193,10 @@ const AllUsers: React.FC = () => {
       setShowEditRoleModal(false);
       setSelectedUserForRoleEdit(null); // Clear selected user
       fetchAllUsers(); // Refresh the user list
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Update role error:", err);
-      setEditRoleError(err.message || "An unexpected error occurred during role update.");
+      // Type guard for error message
+      setEditRoleError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred during role update.");
     } finally {
       setEditRoleLoading(false);
     }
@@ -242,9 +246,10 @@ const AllUsers: React.FC = () => {
       setShowDeleteConfirmModal(false);
       setUserToDelete(null); // Clear user to delete
       fetchAllUsers(); // Refresh the user list
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Delete user error:", err);
-      setDeleteError(err.message || "An unexpected error occurred during user deletion.");
+      // Type guard for error message
+      setDeleteError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred during user deletion.");
     } finally {
       setDeleteLoading(false);
     }
@@ -256,12 +261,12 @@ const AllUsers: React.FC = () => {
       <main className="admin-dashboard-page">
         <section className="section-padding">
           <div className="container">
-            <h2 className="section-title" data-aos="fade-up">All Users Management</h2>
-            <p className="section-description" data-aos="fade-up" data-aos-delay="50">
+            <h2 className="section-title">All Users Management</h2> {/* Removed data-aos attribute */}
+            <p className="section-description"> {/* Removed data-aos attributes */}
               Manage all user accounts, create new users, and update their roles.
             </p>
 
-            <div className="admin-actions-bar" data-aos="fade-up" data-aos-delay="100">
+            <div className="admin-actions-bar"> {/* Removed data-aos attribute */}
               <button
                 className="primary-btn"
                 onClick={() => {
@@ -283,7 +288,7 @@ const AllUsers: React.FC = () => {
               <p style={{ textAlign: 'center' }}>No users found.</p>
             ) : (
               <div className="table-responsive">
-                <table className="admin-table" data-aos="fade-up" data-aos-delay="150">
+                <table className="admin-table"> {/* Removed data-aos attribute */}
                   <thead>
                     <tr>
                       <th>Full Name</th>
@@ -330,7 +335,7 @@ const AllUsers: React.FC = () => {
       {/* Create User Modal */}
       {showCreateUserModal && (
         <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="create-user-modal-title">
-          <div className="modal-content" data-aos="zoom-in">
+          <div className="modal-content"> {/* Removed data-aos attribute */}
             <h3 id="create-user-modal-title">Create New User</h3>
             {createError && <p className="error-text">{createError}</p>}
             <form onSubmit={handleCreateUser}>
@@ -402,7 +407,7 @@ const AllUsers: React.FC = () => {
       {/* Edit Role Modal */}
       {showEditRoleModal && selectedUserForRoleEdit && (
         <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="edit-role-modal-title">
-          <div className="modal-content" data-aos="zoom-in">
+          <div className="modal-content"> {/* Removed data-aos attribute */}
             <h3 id="edit-role-modal-title">Edit Role for {selectedUserForRoleEdit.fullName}</h3>
             {editRoleError && <p className="error-text">{editRoleError}</p>}
             <form onSubmit={handleUpdateRole}>
@@ -441,7 +446,7 @@ const AllUsers: React.FC = () => {
       {/* Delete Confirmation Modal */}
       {showDeleteConfirmModal && userToDelete && (
         <div className="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-confirm-modal-title">
-          <div className="modal-content" data-aos="zoom-in">
+          <div className="modal-content"> {/* Removed data-aos attribute */}
             <h3 id="delete-confirm-modal-title">Confirm Deletion</h3>
             {deleteError && <p className="error-text">{deleteError}</p>}
             <p>Are you sure you want to delete user: <strong>{userToDelete.fullName} ({userToDelete.email})</strong>?</p>

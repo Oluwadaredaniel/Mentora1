@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import AOS from "aos"; // Ensure AOS is installed (npm install aos or yarn add aos)
-import "aos/dist/aos.css"; // Ensure AOS styles are available
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import Navbar from "../../components/Navbar"; // Retaining original path. Please verify this path matches your project structure.
 import Footer from "../../components/Footer"; // Retaining original path. Please verify this path matches your project structure.
 import "../../styles/styles.css"; // Retaining original path. Please verify this path matches your project structure.
@@ -41,9 +41,10 @@ const MenteeSessions: React.FC = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
   useEffect(() => {
-    AOS.init({
-      once: true, // Only animate once
-    });
+    // Removed AOS initialization
+    // AOS.init({
+    //   once: true, // Only animate once
+    // });
     fetchSessions(); // Fetch mentee's sessions on component mount
   }, []);
 
@@ -84,9 +85,9 @@ const MenteeSessions: React.FC = () => {
 
       const data = await response.json();
       setSessions(data.sessions || []); // Assuming backend returns { sessions: [...] }
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Fetch mentee sessions error:", err);
-      setError(err.message || "An unexpected error occurred while fetching your sessions.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while fetching your sessions.");
     } finally {
       setLoading(false);
     }
@@ -148,9 +149,9 @@ const MenteeSessions: React.FC = () => {
       setFeedbackRating('');
       setFeedbackComment('');
       fetchSessions(); // Refresh sessions to show updated feedback
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Submit feedback error:", err);
-      setError(err.message || "An unexpected error occurred while submitting feedback.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while submitting feedback.");
     } finally {
       setIsSubmittingFeedback(false);
     }
@@ -162,7 +163,7 @@ const MenteeSessions: React.FC = () => {
       <main className="mentee-sessions-page">
         <section className="section-padding">
           <div className="container">
-            <h2 className="section-title" data-aos="fade-up">My Mentorship Sessions</h2>
+            <h2 className="section-title">My Mentorship Sessions</h2> {/* Removed data-aos attribute */}
 
             {error && <p className="error-text" style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
             {successMessage && <p className="success-text" style={{ color: 'green', textAlign: 'center' }}>{successMessage}</p>}
@@ -173,7 +174,7 @@ const MenteeSessions: React.FC = () => {
               <p style={{ textAlign: 'center' }}>No sessions found. Start by browsing mentors!</p>
             ) : (
               <div className="table-responsive"> {/* For better responsiveness on smaller screens */}
-                <table className="admin-table" data-aos="fade-up" data-aos-delay="100">
+                <table className="admin-table"> {/* Removed data-aos attribute */}
                   <thead>
                     <tr>
                       <th>Mentor</th>
@@ -229,7 +230,7 @@ const MenteeSessions: React.FC = () => {
       {/* Feedback Modal */}
       {showFeedbackModal && selectedSession && (
         <div className="modal-overlay">
-          <div className="modal-content" data-aos="zoom-in">
+          <div className="modal-content"> {/* Removed data-aos attribute */}
             <h3>Feedback for Session with {selectedSession.mentor.fullName}</h3>
             <p>On: {new Date(selectedSession.date).toLocaleString()}</p>
             <form onSubmit={handleSubmitFeedback}>
@@ -254,6 +255,7 @@ const MenteeSessions: React.FC = () => {
                   value={feedbackComment}
                   onChange={(e) => setFeedbackComment(e.target.value)}
                   placeholder="Share your thoughts about the session..."
+                  required // Made required as per PRD for mentee feedback
                   aria-label="Session Feedback Comment"
                 ></textarea>
               </div>

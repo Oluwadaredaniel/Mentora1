@@ -11,5 +11,5 @@ export default defineConfig({
       // This uses path.resolve to create an absolute path to your src directory.
       '@': path.resolve(__dirname, './src'),
     },
-  },s
+  },
 });

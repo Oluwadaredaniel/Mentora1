@@ -1,7 +1,7 @@
 // src/features/mentee/BookSession.tsx
 import React, { useEffect, useState } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar"; // Verify path
 import Footer from "../../components/Footer"; // Verify path
@@ -50,7 +50,8 @@ const BookSession: React.FC = () => {
   const mentorId = mentorIdFromState || mentorIdFromUrl;
 
   useEffect(() => {
-    AOS.init({ duration: 800, once: true });
+    // Removed AOS initialization
+    // AOS.init({ duration: 800, once: true });
     if (mentorId) {
       fetchMentorProfile(mentorId);
     } else {
@@ -90,9 +91,9 @@ const BookSession: React.FC = () => {
 
       const data: Mentor = await response.json();
       setMentor(data);
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Fetch mentor profile error:", err);
-      setError(err.message || "An unexpected error occurred while fetching mentor details.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while fetching mentor details.");
     } finally {
       setLoading(false);
     }
@@ -190,9 +191,9 @@ const BookSession: React.FC = () => {
       setTimeout(() => {
         navigate("/mentee/sessions");
       }, 2000);
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Book session error:", err);
-      setError(err.message || "An unexpected error occurred while booking the session.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while booking the session.");
     } finally {
       setBookingLoading(false);
     }
@@ -232,7 +233,7 @@ const BookSession: React.FC = () => {
       <Navbar />
       <main className="book-session-page">
         <section className="hero-section">
-          <div className="hero-content" data-aos="fade-down">
+          <div className="hero-content"> {/* Removed data-aos attribute */}
             <h2 className="section-title">Book a Session with {mentor?.fullName}</h2>
             <p>Select an available date and time slot to book your mentorship session.</p>
           </div>
@@ -242,7 +243,7 @@ const BookSession: React.FC = () => {
           {error && <p className="error-text" style={{ textAlign: 'center' }}>{error}</p>}
           {successMessage && <p className="success-text" style={{ textAlign: 'center' }}>{successMessage}</p>}
 
-          <div className="mentor-details-card" data-aos="fade-right">
+          <div className="mentor-details-card"> {/* Removed data-aos attribute */}
             <h3>Mentor Profile:</h3>
             <p><strong>Name:</strong> {mentor?.fullName}</p>
             <p><strong>Email:</strong> {mentor?.email}</p>
@@ -255,7 +256,7 @@ const BookSession: React.FC = () => {
             )}
           </div>
 
-          <div className="booking-section" data-aos="fade-up" data-aos-delay="100">
+          <div className="booking-section"> {/* Removed data-aos attribute */}
             <h3>Choose a Session Slot</h3>
 
             {mentor?.availability && mentor.availability.length === 0 ? (
@@ -293,7 +294,7 @@ const BookSession: React.FC = () => {
                 )}
 
                 {selectedSlot && (
-                  <div className="selected-slot-summary" data-aos="fade-up">
+                  <div className="selected-slot-summary"> {/* Removed data-aos attribute */}
                     <h4>Selected Slot:</h4>
                     <p>
                       {selectedSlot.day}, {new Date(selectedSlot.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}

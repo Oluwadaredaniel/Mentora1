@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import AOS from "aos"; // Ensure AOS is installed (npm install aos or yarn add aos)
-import "aos/dist/aos.css"; // Ensure AOS styles are available
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import Navbar from "../../components/Navbar"; // Adjusted path
 import Footer from "../../components/Footer"; // Adjusted path
 import "../../styles/styles.css"; // Adjusted path
@@ -39,9 +39,10 @@ const AllMatches: React.FC = () => {
 
 
   useEffect(() => {
-    AOS.init({
-      once: true, // Only animate once
-    });
+    // Removed AOS initialization
+    // AOS.init({
+    //   once: true, // Only animate once
+    // });
     fetchData(); // Fetch users and matches when the component mounts
   }, []);
 
@@ -157,7 +158,7 @@ const AllMatches: React.FC = () => {
     <>
       <Navbar />
       <main className="admin-dashboard-page">
-        <section className="section-padding" data-aos="fade-up">
+        <section className="section-padding"> {/* Removed data-aos attribute */}
           <div className="container">
             <h2 className="section-title">🤝 All Mentorship Matches</h2>
             <p>View and manually assign mentor-mentee connections.</p>
@@ -214,7 +215,7 @@ const AllMatches: React.FC = () => {
                 <p style={{ textAlign: 'center' }}>No matches found.</p>
             ) : (
                 <div className="table-responsive"> {/* Add responsive container */}
-                    <table className="admin-table" data-aos="fade-up" data-aos-delay="200">
+                    <table className="admin-table"> {/* Removed data-aos attributes */}
                         <thead>
                             <tr>
                                 <th>Mentor</th>

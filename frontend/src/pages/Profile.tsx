@@ -1,7 +1,7 @@
 // src/pages/Profile.tsx
-import React, { useEffect, useState } from "react";
-import AOS from "aos"; // Ensure AOS is installed (npm install aos or yarn add aos)
-import "aos/dist/aos.css"; // Ensure AOS styles are available
+import React, { useEffect, useState } from "react"; // Fixed syntax here: 'from' instead of '=>'
+// Removed: import AOS from "aos"; // Ensure AOS is installed (npm install aos or yarn add aos)
+// Removed: import "aos/dist/aos.css"; // Ensure AOS styles are available
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar"; // Adjusted path assuming Profile.tsx is directly under src/pages/
 import Footer from "../components/Footer"; // Adjusted path assuming Profile.tsx is directly under src/pages/
@@ -65,8 +65,12 @@ const Profile: React.FC = () => {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  // --- API Base URL Declaration ---
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
+
+
   useEffect(() => {
-    AOS.init({ duration: 800, once: true });
+    // Removed: AOS.init({ duration: 800, once: true });
     fetchUserProfile();
   }, []);
 
@@ -84,7 +88,7 @@ const Profile: React.FC = () => {
 
     try {
       // PRD: GET /auth/me - Get the currently authenticated user
-      const response = await fetch("http://localhost:5000/api/auth/me", {
+      const response = await fetch(`${API_BASE_URL}/auth/me`, { // Using API_BASE_URL
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -107,9 +111,9 @@ const Profile: React.FC = () => {
         // Conditional set for availability if user is a mentor
         availability: data.role === "mentor" && data.availability ? data.availability : [],
       });
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Fetch user profile error:", err);
-      setError(err.message || "Failed to load your profile data.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "Failed to load your profile data.");
       // If fetching fails, redirect to login as profile is required.
       // navigate('/login', { replace: true });
     } finally {
@@ -229,7 +233,7 @@ const Profile: React.FC = () => {
       // PRD: PUT /users/me/profile Update own profile (bio, skills, goals)
       // The current backend route is POST /api/auth/profile in authRoutes.js
       // We will use that for now, but note the PRD suggests PUT /users/me/profile
-      const response = await fetch("http://localhost:5000/api/auth/profile", {
+      const response = await fetch(`${API_BASE_URL}/auth/profile`, { // Using API_BASE_URL
         method: "POST", // Using POST as per current auth-router-backend.js
         headers: {
           "Content-Type": "application/json",
@@ -250,16 +254,16 @@ const Profile: React.FC = () => {
 
       // After successful update and profile completion, redirect to respective dashboard
       if (userProfile?.role === "admin") {
-        navigate("/admin/dashboard");
+        navigate("/admin/AdminDashboard"); // Corrected path to AdminDashboard
       } else if (userProfile?.role === "mentor") {
         navigate("/mentor/dashboard");
       } else if (userProfile?.role === "mentee") {
         navigate("/mentee/dashboard");
       }
 
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Profile update error:", err);
-      setError(err.message || "An unexpected error occurred while saving your profile.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while saving your profile.");
     } finally {
       setSubmitting(false);
     }
@@ -297,7 +301,7 @@ const Profile: React.FC = () => {
       <Navbar />
       <main className="profile-page">
         <section className="hero-section">
-          <div className="hero-content" data-aos="fade-down">
+          <div className="hero-content"> {/* Removed data-aos attribute */}
             <h2 className="section-title">Edit Your Profile</h2>
             <p>Complete your profile to get the most out of Mentora.</p>
           </div>
@@ -307,7 +311,7 @@ const Profile: React.FC = () => {
           {error && <p className="error-text" style={{ textAlign: 'center' }}>{error}</p>}
           {successMessage && <p className="success-text" style={{ textAlign: 'center' }}>{successMessage}</p>}
 
-          <form onSubmit={handleSubmit} className="profile-form" data-aos="fade-up" data-aos-delay="100">
+          <form onSubmit={handleSubmit} className="profile-form"> {/* Removed data-aos attribute */}
             <div className="form-group">
               <label htmlFor="fullName">Full Name:</label>
               <input
@@ -368,7 +372,7 @@ const Profile: React.FC = () => {
 
             {/* Mentor-specific fields */}
             {userProfile.role === "mentor" && (
-              <div className="mentor-specific-fields" data-aos="fade-up" data-aos-delay="200">
+              <div className="mentor-specific-fields"> {/* Removed data-aos attribute */}
                 <h3>Your Availability (Mentor Specific)</h3>
                 <p>Set your weekly availability blocks for mentorship sessions.</p>
                 {formData.availability.length === 0 && (

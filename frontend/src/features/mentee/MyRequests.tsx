@@ -1,7 +1,7 @@
 // src/features/mentee/MenteeRequests.tsx
 import React, { useEffect, useState } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import Navbar from "../../components/Navbar"; // Verify path
 import Footer from "../../components/Footer"; // Verify path
 import "../../styles/styles.css"; // Verify path
@@ -33,9 +33,10 @@ const MenteeRequests: React.FC = () => {
   const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
   useEffect(() => {
-    AOS.init({
-      once: true, // Only animate once
-    });
+    // Removed AOS initialization
+    // AOS.init({
+    //   once: true, // Only animate once
+    // });
     fetchSentRequests(); // Fetch mentee's sent requests on component mount
   }, []);
 
@@ -77,9 +78,9 @@ const MenteeRequests: React.FC = () => {
       const data = await response.json();
       // Assuming backend returns an object like { requests: [...] } or an array directly
       setRequests(data.requests || []); // Adjust based on your backend's actual response structure
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Fetch sent requests error:", err);
-      setError(err.message || "An unexpected error occurred while fetching your sent requests.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while fetching your sent requests.");
     } finally {
       setLoading(false);
     }
@@ -97,7 +98,7 @@ const MenteeRequests: React.FC = () => {
       <main className="mentee-requests-page">
         <section className="section-padding">
           <div className="container">
-            <h2 className="section-title" data-aos="fade-up">My Sent Mentorship Requests</h2>
+            <h2 className="section-title">My Sent Mentorship Requests</h2> {/* Removed data-aos attribute */}
 
             {error && <p className="error-text" style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
 
@@ -108,7 +109,7 @@ const MenteeRequests: React.FC = () => {
             ) : (
               <div className="requests-grid"> {/* Use a grid for cards or a responsive table */}
                 {requests.map((req) => (
-                  <div className="request-card" key={req._id} data-aos="fade-up">
+                  <div className="request-card" key={req._id}> {/* Removed data-aos attribute */}
                     <h3>Request to: {req.mentor.fullName}</h3>
                     <p><strong>Mentor Email:</strong> {req.mentor.email}</p>
                     <p><strong>Your Message:</strong> {req.message}</p>

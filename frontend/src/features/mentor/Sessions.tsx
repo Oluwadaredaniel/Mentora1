@@ -1,16 +1,10 @@
+// src/features/mentor/Sessions.tsx
 import React, { useEffect, useState } from "react";
-import AOS from "aos"; // Ensure AOS is installed (npm install aos or yarn add aos)
-import "aos/dist/aos.css"; // Ensure AOS styles are available
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import Navbar from "../../components/Navbar"; // Retaining original path. Please verify this path matches your project structure.
 import Footer from "../../components/Footer"; // Retaining original path. Please verify this path matches your project structure.
 import "../../styles/styles.css"; // Retaining original path. Please verify this path matches your project structure.
-
-// Removed UserInSession interface as it's not directly used here.
-// interface UserInSession {
-//   _id: string;
-//   fullName: string;
-//   email: string;
-// }
 
 interface Session {
   _id: string;
@@ -47,9 +41,10 @@ const Sessions: React.FC = () => {
 
 
   useEffect(() => {
-    AOS.init({
-      once: true, // Only animate once
-    });
+    // Removed AOS initialization
+    // AOS.init({
+    //   once: true, // Only animate once
+    // });
     fetchSessions(); // Fetch sessions when the component mounts
   }, []);
 
@@ -89,9 +84,9 @@ const Sessions: React.FC = () => {
       const data = await response.json();
       setSessions(data.sessions || data || []);
 
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Fetch sessions error:", err);
-      setError(err.message || "An unexpected error occurred while fetching sessions.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while fetching sessions.");
     } finally {
       setLoading(false);
     }
@@ -153,9 +148,9 @@ const Sessions: React.FC = () => {
       setSelectedSessionForMentorFeedback(null); // Clear selected session
       setMentorFeedbackText('');
       fetchSessions(); // Refresh sessions to show updated feedback
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Submit mentor feedback error:", err);
-      setError(err.message || "An unexpected error occurred while submitting your feedback.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while submitting your feedback.");
     } finally {
       setIsSubmittingMentorFeedback(false);
     }
@@ -191,9 +186,9 @@ const Sessions: React.FC = () => {
 
       setSuccessMessage("Session marked as completed successfully!");
       fetchSessions(); // Refresh sessions to update status in the table
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Mark session completed error:", err);
-      setError(err.message || "An unexpected error occurred while marking session as completed.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "An unexpected error occurred while marking session as completed.");
     } finally {
       setMarkingCompletedId(null); // Clear loading state
     }
@@ -206,7 +201,7 @@ const Sessions: React.FC = () => {
       <main className="mentor-sessions-page">
         <section className="section-padding">
           <div className="container">
-            <h2 className="section-title" data-aos="fade-up">My Mentorship Sessions</h2>
+            <h2 className="section-title">My Mentorship Sessions</h2> {/* Removed data-aos attribute */}
 
             {error && <p className="error-text" style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
             {successMessage && <p className="success-text" style={{ color: 'green', textAlign: 'center' }}>{successMessage}</p>}
@@ -217,7 +212,7 @@ const Sessions: React.FC = () => {
               <p style={{ textAlign: 'center' }}>No sessions found.</p>
             ) : (
               <div className="table-responsive"> {/* Add a responsive container for the table */}
-                <table className="admin-table" data-aos="fade-up" data-aos-delay="100">
+                <table className="admin-table"> {/* Removed data-aos attribute */}
                   <thead>
                     <tr>
                       <th>Date & Time</th> {/* Combined for clarity */}
@@ -275,7 +270,7 @@ const Sessions: React.FC = () => {
       {/* Mentor Feedback Modal */}
       {showMentorFeedbackModal && selectedSessionForMentorFeedback && (
         <div className="modal-overlay">
-          <div className="modal-content" data-aos="zoom-in">
+          <div className="modal-content"> {/* Removed data-aos attribute */}
             <h3>Your Feedback for Session with {selectedSessionForMentorFeedback.mentee.fullName}</h3>
             <p>On: {new Date(selectedSessionForMentorFeedback.date).toLocaleString()}</p>
             <form onSubmit={handleSubmitMentorFeedback}>

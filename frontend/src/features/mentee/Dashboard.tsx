@@ -1,7 +1,7 @@
 // src/features/mentee/Dashboard.tsx
 import React, { useEffect, useState } from "react";
-import AOS from "aos"; // Ensure AOS is installed (npm install aos or yarn add aos)
-import "aos/dist/aos.css"; // Ensure AOS styles are available
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/Navbar"; // Retaining original path. Please verify this path matches your project structure.
 import Footer from "../../components/Footer"; // Retaining original path. Please verify this path matches your project structure.
@@ -12,7 +12,8 @@ const MenteeDashboard: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    AOS.init({ duration: 800, once: true }); // Initialize AOS with 'once: true' for single animation
+    // Removed AOS initialization
+    // AOS.init({ duration: 800, once: true });
     // Retrieve the full name from local storage. It's generally better to store 'fullName' after login.
     const name = localStorage.getItem("mentoraUserFullName") || "Mentee"; // Assuming 'mentoraUserFullName' is stored on login
     setUserName(name);
@@ -24,14 +25,14 @@ const MenteeDashboard: React.FC = () => {
       <Navbar />
       <main className="mentee-dashboard-page"> {/* Consistent main tag for styling */}
         <section className="hero-section mentee-hero"> {/* Applying hero section styles */}
-          <div className="hero-content" data-aos="fade-down"> {/* AOS fade-down for header */}
+          <div className="hero-content"> {/* Removed data-aos attribute */}
             <h2>Welcome back, {userName} 👋</h2>
             <p>Your journey to growth continues here!</p>
           </div>
         </section>
 
         <section className="section-padding"> {/* Consistent section padding */}
-          <div className="container dashboard-grid" data-aos="fade-up"> {/* AOS fade-up for cards */}
+          <div className="container dashboard-grid"> {/* Removed data-aos attribute */}
             <div
               className="dashboard-card"
               onClick={() => navigate("/mentee/browse")}

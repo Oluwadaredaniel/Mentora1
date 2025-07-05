@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react"; // Corrected syntax: 'from' instead of '=>'
-import AOS from "aos"; // Ensure AOS is installed (npm install aos or yarn add aos)
-import "aos/dist/aos.css"; // Ensure AOS styles are available
+import React, { useEffect, useState } from "react";
+// Removed: import AOS from "aos";
+// Removed: import "aos/dist/aos.css";
 import Navbar from "../../components/Navbar"; // Retaining original path. Please verify this path matches your project structure.
 import Footer from "../../components/Footer"; // Retaining original path. Please verify this path matches your project structure.
 import "../../styles/styles.css"; // Retaining original path. Please verify this path matches your project structure.
@@ -46,9 +46,10 @@ const Availability: React.FC = () => {
 
 
   useEffect(() => {
-    AOS.init({
-      once: true, // Only animate once
-    });
+    // Removed AOS initialization
+    // AOS.init({
+    //   once: true, // Only animate once
+    // });
     fetchExistingAvailability(); // Fetch existing availability on component mount
   }, []);
 
@@ -85,9 +86,9 @@ const Availability: React.FC = () => {
         console.warn("Unexpected availability data format:", data);
         setSlots([]); // Default to empty if format is unexpected
       }
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Fetch availability error:", err);
-      setError(err.message || "Failed to load your availability.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "Failed to load your availability.");
     } finally {
       setLoading(false);
     }
@@ -170,9 +171,9 @@ const Availability: React.FC = () => {
         setSuccessMessage("Availability saved successfully!");
         console.log("Availability saved:", data);
       }
-    } catch (err: any) {
+    } catch (err: unknown) { // Changed 'any' to 'unknown'
       console.error("Save availability error:", err);
-      setError(err.message || "Server error. Please try again later.");
+      setError((err instanceof Error ? err.message : "An unexpected error occurred") || "Server error. Please try again later.");
     } finally {
       setSaving(false); // End saving loading state
     }
@@ -182,7 +183,7 @@ const Availability: React.FC = () => {
     <>
       <Navbar />
       <main className="availability-page">
-        <section className="section-padding container" data-aos="fade-up">
+        <section className="section-padding container"> {/* Removed data-aos attribute */}
           <h2>Set Your Weekly Availability</h2>
 
           {error && <p style={{ color: "red", textAlign: "center" }}>{error}</p>}
@@ -227,7 +228,7 @@ const Availability: React.FC = () => {
           {loading ? (
             <p style={{ textAlign: "center", marginTop: "1rem" }}>Loading existing availability...</p>
           ) : slots.length > 0 ? (
-            <div className="availability-list" data-aos="fade-up">
+            <div className="availability-list"> {/* Removed data-aos attribute */}
               <h3>Your Current Availability Slots</h3>
               <ul>
                 {slots.map((s, index) => (

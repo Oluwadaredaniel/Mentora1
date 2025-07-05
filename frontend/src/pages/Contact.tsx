@@ -1,7 +1,7 @@
 // src/pages/Contact.tsx
 import React, { useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
+// Removed: import AOS from 'aos';
+// Removed: import 'aos/dist/aos.css';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import '../styles/styles.css';
@@ -9,7 +9,7 @@ import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt, FaFacebookF, FaTwitter, FaInsta
 
 const Contact: React.FC = () => {
   useEffect(() => {
-    AOS.init();
+    // Removed: AOS.init();
   }, []);
 
   return (
@@ -18,7 +18,7 @@ const Contact: React.FC = () => {
       <main className="contact-page">
         {/* Hero */}
         <section className="hero-section contact-hero">
-          <div className="hero-content" data-aos="fade-up" data-aos-duration="1000">
+          <div className="hero-content"> {/* Removed data-aos attribute */}
             <h1>Get in Touch with Us</h1>
             <p>We're here to help! Reach out for support, partnerships, or general inquiries.</p>
           </div>
@@ -28,7 +28,7 @@ const Contact: React.FC = () => {
         <section className="contact-details-section section-padding">
           <div className="container contact-grid-layout">
             {/* Form */}
-            <div className="contact-form-container" data-aos="fade-right" data-aos-duration="1000">
+            <div className="contact-form-container"> {/* Removed data-aos attribute */}
               <h3>Send Us a Message</h3>
               <form className="contact-form">
                 <div className="form-group">
@@ -52,7 +52,7 @@ const Contact: React.FC = () => {
             </div>
 
             {/* Info */}
-            <div className="contact-info-container" data-aos="fade-left" data-aos-duration="1000">
+            <div className="contact-info-container"> {/* Removed data-aos attribute */}
               <h3>Contact Information</h3>
               <div className="contact-info-block">
                 <div className="contact-info-item">
