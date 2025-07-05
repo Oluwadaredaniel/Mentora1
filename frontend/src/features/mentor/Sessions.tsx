@@ -5,18 +5,19 @@ import Navbar from "../../components/Navbar"; // Retaining original path. Please
 import Footer from "../../components/Footer"; // Retaining original path. Please verify this path matches your project structure.
 import "../../styles/styles.css"; // Retaining original path. Please verify this path matches your project structure.
 
-interface UserInSession {
-  _id: string;
-  fullName: string;
-  email: string;
-}
+// Removed UserInSession interface as it's not directly used here.
+// interface UserInSession {
+//   _id: string;
+//   fullName: string;
+//   email: string;
+// }
 
 interface Session {
   _id: string;
   date: string; // Assuming date is a string that can be parsed (e.g., ISO format)
   status: "SCHEDULED" | "COMPLETED" | "CANCELLED" | "PENDING_FEEDBACK"; // Session status
   notes?: string; // Optional field for mentor notes during a session
-  mentee: {
+  mentee: { // Directly define mentee properties here
     _id: string; // Include mentee ID for potential future actions
     fullName: string;
     email: string;
