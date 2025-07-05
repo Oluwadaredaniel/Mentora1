@@ -19,7 +19,7 @@ const Home = () => {
           <div className="hero-content"> {/* Removed data-aos attribute */}
             <h1>Find the Right Mentor, Every Step of the Way</h1>
             <p>Connect with experts, grow your skills, and succeed through meaningful mentorship.</p>
-            <a href="/about" className="btn-primary pulse-effect">Explore Mentora</a>
+            <a href="/About" className="btn-primary pulse-effect">Explore Mentora</a>
           </div>
         </section>
 
@@ -51,7 +51,7 @@ const Home = () => {
               </a>
             </div>
             <div className="view-all-btn"> {/* Removed data-aos attribute */}
-              <a href="/mentors" className="btn-secondary">View All Mentors</a>
+              <a href="/login" className="btn-secondary">View All Mentors</a>
             </div>
           </div>
         </section>
@@ -78,7 +78,7 @@ const Home = () => {
               </div>
             </div>
             <div className="view-all-btn"> {/* Removed data-aos attribute */}
-              <a href="/services" className="btn-primary">See Full Guide</a>
+              <a href="/HowItWorks" className="btn-primary">See Full Guide</a>
             </div>
           </div>
         </section>
@@ -89,7 +89,7 @@ const Home = () => {
             <h2>Start Your Mentorship Journey Today</h2> {/* Removed data-aos attribute */}
             <p>Mentorship changes lives. Take your next step now.</p> {/* Removed data-aos attribute */}
             <a href="/register" className="btn-primary pulse-effect">Join as Mentee</a> {/* Removed data-aos attribute */}
-            <a href="/contact" className="btn-secondary">Become a Mentor</a> {/* Removed data-aos attribute */}
+            <a href="/Contact" className="btn-secondary">Become a Mentor</a> {/* Removed data-aos attribute */}
           </div>
         </section>
       </main>
